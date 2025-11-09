@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Tests - Govt Exam Portal</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <header>
+    <h1>🧠 Tests</h1>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/notes">Notes</a>
+      <a href="/tests">Tests</a>
+    </nav>
+  </header>
+
+  <input type="text" id="search" placeholder="Search Tests..." class="search-box">
+
+  <div class="progress-container">
+    <p>Progress: <span id="progress">0%</span> completed</p>
+    <div class="progress-bar"><div id="progress-fill"></div></div>
+  </div>
+
+  <ul id="test-list">
+  {% for test in tests %}
+    <li class="note-card" data-id="{{ test.doc_id }}">
+      <a href="{{ test.link }}" target="_blank">{{ test.title }}</a>
+      <span class="status">Pending</span>
+    </li>
+  {% endfor %}
+  </ul>
+
+  <script>
+  const list = document.querySelectorAll('#test-list li');
+  const updateProgress = () => {
+    const total = list.length;
+    const done = Array.from(list).filter(li => localStorage.getItem('test-' + li.dataset.id) === 'done').length;
+    const percent = total ? Math.round((done / total) * 100) : 0;
+    document.getElementById('progress').innerText = percent + '%';
+    document.getElementById('progress-fill').style.width = percent + '%';
+  };
+
+  // Mark as done
+  document.querySelectorAll('#test-list li a').forEach(link => {
+    link.addEventListener('click', () => {
+      const li = link.parentElement;
+      li.querySelector('.status').innerText = 'Completed ✅';
+      localStorage.setItem('test-' + li.dataset.id, 'done');
+      updateProgress();
+    });
+  });
+
+  // Load progress
+  window.onload = () => {
+    list.forEach(li => {
+      if (localStorage.getItem('test-' + li.dataset.id) === 'done') {
+        li.querySelector('.status').innerText = 'Completed ✅';
+      }
+    });
+    updateProgress();
+  };
+
+  // Search filter
+  document.getElementById('search').addEventListener('input', e => {
+    const q = e.target.value.toLowerCase();
+    list.forEach(li => {
+      const title = li.querySelector('a').innerText.toLowerCase();
+      li.style.display = title.includes(q) ? 'block' : 'none';
+    });
+  });
+  </script>
+</body>
+</html>

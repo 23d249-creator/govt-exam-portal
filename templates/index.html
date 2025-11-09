@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Notes - Govt Exam Portal</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <header>
+    <h1>📘 Notes</h1>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/notes">Notes</a>
+      <a href="/tests">Tests</a>
+    </nav>
+  </header>
+
+  <input type="text" id="search" placeholder="Search Notes..." class="search-box">
+
+  <div class="progress-container">
+    <p>Progress: <span id="progress">0%</span> viewed</p>
+    <div class="progress-bar"><div id="progress-fill"></div></div>
+  </div>
+
+  <ul id="note-list">
+  {% for note in notes %}
+    <li class="note-card" data-id="{{ note.doc_id }}">
+      <a href="{{ url_for('static', filename='uploads/' + note.file) }}" target="_blank">{{ note.title }}</a>
+      <span class="status">Not Viewed</span>
+    </li>
+  {% endfor %}
+  </ul>
+
+  <script>
+  const list = document.querySelectorAll('#note-list li');
+  const updateProgress = () => {
+    const total = list.length;
+    const viewed = Array.from(list).filter(li => localStorage.getItem('note-' + li.dataset.id) === 'viewed').length;
+    const percent = total ? Math.round((viewed / total) * 100) : 0;
+    document.getElementById('progress').innerText = percent + '%';
+    document.getElementById('progress-fill').style.width = percent + '%';
+  };
+
+  // Mark as viewed
+  document.querySelectorAll('#note-list li a').forEach(link => {
+    link.addEventListener('click', () => {
+      const li = link.parentElement;
+      li.querySelector('.status').innerText = 'Viewed ✅';
+      localStorage.setItem('note-' + li.dataset.id, 'viewed');
+      updateProgress();
+    });
+  });
+
+  // Load progress
+  window.onload = () => {
+    list.forEach(li => {
+      if (localStorage.getItem('note-' + li.dataset.id) === 'viewed') {
+        li.querySelector('.status').innerText = 'Viewed ✅';
+      }
+    });
+    updateProgress();
+  };
+
+  // Search feature
+  document.getElementById('search').addEventListener('input', e => {
+    const q = e.target.value.toLowerCase();
+    list.forEach(li => {
+      const title = li.querySelector('a').innerText.toLowerCase();
+      li.style.display = title.includes(q) ? 'block' : 'none';
+    });
+  });
+  </script>
+</body>
+</html>

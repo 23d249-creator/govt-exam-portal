@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Govt Exams Portal</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="background-animation"></div>
+
+  <div class="container">
+    <h1>GOVT EXAMS PORTAL</h1>
+    <p class="slogan">
+      Empowering Aspirants with Smarter Tests, Reliable Notes, and Real-time Success Tracking — 
+      Because Every Dream Deserves a Chance to Shine!
+    </p>
+
+    <div class="button-container" style="margin-bottom: 40px;">
+      <a href="{{ url_for('user_dashboard') }}" class="btn">User Dashboard</a>
+      <a href="{{ url_for('admin_login') }}" class="btn">Admin Panel</a>
+    </div>
+
+    <div class="social-links">
+      <a href="https://www.instagram.com/tnpsc_free_test?igsh=MXYybDdtMTA1cjB3Yg==" target="_blank" style="text-decoration: none; display: flex; align-items: center; gap: 10px;">
+        <img src="{{ url_for('static', filename='insta.png') }}" alt="Instagram" class="insta-icon">
+        <span class="insta-text">@tnpsc_free_test</span>
+      </a>
+    </div>
+  </div>
+</body>
+</html>

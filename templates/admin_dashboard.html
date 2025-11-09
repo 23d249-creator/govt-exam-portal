@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Dashboard | Govt Exam Portal</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="admin-dashboard">
+  <div class="bg-overlay"></div>
+
+  <header class="header">
+    <h1>Admin Dashboard</h1>
+    <a href="{{ url_for('logout') }}" class="logout-btn">Logout</a>
+  </header>
+
+  <section class="stats-section">
+    <div class="stat-card animate"><h3>Total Notes</h3><p>{{ total_notes }}</p></div>
+    <div class="stat-card animate"><h3>Viewed Notes</h3><p>{{ viewed_notes }}</p></div>
+    <div class="stat-card animate"><h3>Total Tests</h3><p>{{ total_tests }}</p></div>
+    <div class="stat-card animate"><h3>Viewed Tests</h3><p>{{ viewed_tests }}</p></div>
+  </section>
+
+  <section class="charts animate">
+    <canvas id="analyticsChart" width="400" height="150"></canvas>
+  </section>
+
+  <section class="upload-section animate">
+    <h2>📤 Upload Notes</h2>
+    <form action="{{ url_for('upload_note') }}" method="post" enctype="multipart/form-data" class="upload-form">
+      <input type="text" name="title" placeholder="Enter Note Title" required>
+      <input type="file" name="file" required>
+      <button type="submit">Upload Note</button>
+    </form>
+
+    <h2>➕ Add Test</h2>
+    <form action="{{ url_for('add_test') }}" method="post" class="upload-form">
+      <input type="text" name="title" placeholder="Enter Test Title" required>
+      <input type="url" name="link" placeholder="Enter Test Link" required>
+      <button type="submit">Add Test</button>
+    </form>
+  </section>
+
+  <section class="manage-section animate">
+    <h2>Manage Notes</h2>
+    <div class="table-container">
+      {% for note in notes %}
+      <div class="table-row">
+        <span>{{ note.title }}</span>
+        <a href="{{ url_for('delete_note', note_id=note.doc_id) }}" class="del-btn">Delete</a>
+      </div>
+      {% endfor %}
+    </div>
+
+    <h2>Manage Tests</h2>
+    <div class="table-container">
+      {% for test in tests %}
+      <div class="table-row">
+        <span>{{ test.title }}</span>
+        <a href="{{ url_for('delete_test', test_id=test.doc_id) }}" class="del-btn">Delete</a>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <script>
+    const ctx = document.getElementById('analyticsChart');
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['Total Notes', 'Viewed Notes', 'Total Tests', 'Viewed Tests'],
+        datasets: [{
+          label: 'Portal Analytics',
+          data: [{{ total_notes }}, {{ viewed_notes }}, {{ total_tests }}, {{ viewed_tests }}],
+          backgroundColor: ['#ff6384', '#36a2eb', '#ffce56', '#4bc0c0']
+        }]
+      },
+      options: {responsive: true, scales: {y: {beginAtZero: true}}}
+    });
+  </script>
+</body>
+</html>

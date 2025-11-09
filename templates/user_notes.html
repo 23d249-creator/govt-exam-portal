@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Notes</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="background-animation"></div>
+    <div class="container">
+        <h1>📘 Study Notes</h1>
+        <p class="slogan">Access your latest study materials and prepare effectively.</p>
+
+        {% for note in notes %}
+        <div style="margin: 20px 0;">
+            <h3>{{ note.title }}</h3>
+            <a href="{{ note.link }}" target="_blank" class="btn">View / Download</a>
+        </div>
+        {% endfor %}
+
+        <div class="button-container">
+            <a href="{{ url_for('user_dashboard') }}" class="btn">Back to Dashboard</a>
+            <a href="{{ url_for('home') }}" class="btn">Home</a>
+        </div>
+    </div>
+</body>
+</html>

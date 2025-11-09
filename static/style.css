@@ -1,0 +1,165 @@
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: #000;
+    overflow: hidden;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+    position: relative;
+}
+
+.background-animation {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url("https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1500&q=80") no-repeat center center/cover;
+    animation: zoom 20s infinite alternate ease-in-out;
+    filter: brightness(0.4);
+    z-index: 0;
+}
+
+@keyframes zoom {
+    from { transform: scale(1); }
+    to { transform: scale(1.1); }
+}
+
+.container {
+    position: relative;
+    z-index: 2;
+    animation: fadeIn 1s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+h1 {
+    font-size: 3rem;
+    margin-bottom: 10px;
+    letter-spacing: 2px;
+    color: #00c2ff;
+    text-shadow: 2px 2px 10px rgba(0, 255, 255, 0.6);
+}
+
+.slogan {
+    font-size: 1.2rem;
+    font-weight: 300;
+    margin-bottom: 40px;
+    color: #e0e0e0;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+}
+
+.btn {
+    background: linear-gradient(90deg, #0072ff, #00c6ff);
+    color: white;
+    text-decoration: none;
+    padding: 15px 40px;
+    border-radius: 30px;
+    font-weight: bold;
+    font-size: 1.1rem;
+    transition: all 0.4s ease;
+    box-shadow: 0 4px 10px rgba(0, 150, 255, 0.3);
+}
+
+.btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 20px rgba(0, 220, 255, 0.6);
+}
+
+.social-links {
+    margin-top: 60px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+}
+
+.insta-icon {
+    width: 45px;
+    height: 45px;
+    border-radius: 12px;
+    transition: transform 0.3s ease;
+}
+
+.insta-icon:hover {
+    transform: scale(1.1);
+}
+
+.insta-text {
+    font-size: 1rem;
+    color: #00c2ff;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+.dashboard-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 40px;
+    flex-wrap: wrap;
+    margin-top: 40px;
+}
+
+.dashboard-box {
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(8px);
+    border-radius: 20px;
+    padding: 25px;
+    width: 420px;
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+    animation: fadeIn 1.2s ease-in-out;
+}
+
+.dashboard-box h2 {
+    color: #00c2ff;
+    margin-bottom: 15px;
+    text-shadow: 0 0 8px rgba(0, 200, 255, 0.6);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    color: #fff;
+}
+
+th, td {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 10px;
+    text-align: center;
+}
+
+th {
+    color: #00eaff;
+    font-weight: 600;
+}
+
+.btn.small {
+  padding: 8px 18px;
+  font-size: 0.9rem;
+  border-radius: 25px;
+}
+
+table a.btn.small {
+  text-decoration: none;
+}
+
+.dashboard-box table tr:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+  transition: 0.3s;
+}
+
+
+

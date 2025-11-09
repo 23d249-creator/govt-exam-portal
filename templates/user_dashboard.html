@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Dashboard</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="background-animation"></div>
+
+  <div class="container">
+    <h1>📚 User Dashboard</h1>
+    <p class="slogan">Access your study materials and tests side by side.</p>
+
+    <div class="dashboard-container">
+      <div class="dashboard-box">
+        <h2>📘 Study Notes</h2>
+        <table>
+          <tr>
+            <th>Title</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+          {% for note in notes %}
+          <tr>
+            <td>{{ note.title }}</td>
+            <td>{{ "Viewed" if note.viewed else "Not Viewed" }}</td>
+            <td>
+              <a href="{{ url_for('view_note', note_id=note.doc_id) }}" target="_blank" class="btn small">View / Download</a>
+            </td>
+          </tr>
+          {% endfor %}
+        </table>
+      </div>
+
+      <div class="dashboard-box">
+        <h2>🧠 Practice Tests</h2>
+        <table>
+          <tr>
+            <th>Title</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+          {% for test in tests %}
+          <tr>
+            <td>{{ test.title }}</td>
+            <td>{{ "Attended" if test.viewed else "Not Attended" }}</td>
+            <td>
+              <a href="{{ url_for('attend_test', test_id=test.doc_id) }}" class="btn small">Attend Test</a>
+            </td>
+          </tr>
+          {% endfor %}
+        </table>
+      </div>
+    </div>
+
+    <div class="button-container" style="margin-top: 40px;">
+      <a href="{{ url_for('home') }}" class="btn">🏠 Back to Home</a>
+    </div>
+  </div>
+</body>
+</html>
